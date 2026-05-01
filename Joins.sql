@@ -160,3 +160,45 @@ JOIN customers c
     USING(customer_id)
 LEFT JOIN shippers sh 
 	USING(shipper_id);
+
+-- exercise: return date, client, amount, name using sql_invoicing db
+USE sql_invoicing;
+SELECT p.date, c.name AS client, p.amount, pm.name AS payment_method
+FROM payments p
+JOIN clients c USING (client_id)
+JOIN payment_methods pm ON p.payment_method = pm.payment_method_id;
+
+-- NATURAL JOINS: very easy to code. Can produce unexpected results. Cuz the db engine guesses the join. join them based on the common columns
+USE sql_store;
+
+SELECT * 
+FROM orders o
+NATURAL JOIN customers c;
+
+-- CROSS JOINS: join every record from the first table with every record in the second table
+SELECT *
+FROM customers
+CROSS JOIN products p;
+-- every record in customers table will be combined with every record in the products table
+
+-- implicit syntax for cross join
+SELECT *
+FROM customers c, products p;
+
+-- exercise:
+-- do a cross join between shippers and products
+-- using the implicit syntax
+-- and then using the explicit syntax
+
+SELECT s.name AS shipper, p.name AS product
+FROM shippers s , products p
+ORDER BY s.name;
+
+SELECT *
+FROM shippers s
+CROSS JOIN products p;
+
+-- With joins we can combine columns with multiple tables
+
+
+
